@@ -1,11 +1,11 @@
-// mod routes;
+mod routes;
 // mod models;
 
 use actix_cors::Cors;
 use actix_web::{http::header, HttpServer, middleware::Logger, App};
 use sqlx::{Pool, Postgres, postgres::PgPoolOptions};
 use dotenv::dotenv;
-// use routes::{config::config};
+use routes::{airplane::get_plane_info};
 
 pub struct AppState{
     db: Pool<Postgres>,
@@ -34,13 +34,12 @@ async fn main() -> std::io::Result<()>{
             std::process::exit(1);
         }
     };
-    print!("Server started successfully! 🔥");
+    println!("Server started successfully! 🔥");
 
     HttpServer::new(move || {
         let cors = Cors::default()
-          .allowed_origin("http:://localhost::8080")
+          .allowed_origin("http://localhost:3000")
           .allowed_methods(vec!["GET","POST", "PUT", "DELETE"])
-          .allowed_origin("http://localhost:8080")
           .allowed_headers(vec![
             header::CONTENT_TYPE,
             header::AUTHORIZATION,
@@ -50,7 +49,7 @@ async fn main() -> std::io::Result<()>{
           .supports_credentials();
         App::new()
             .app_data(actix_web::web::Data::new(AppState{db:pool.clone()}))
-            // .service(health_checker_handler)
+            .service(get_plane_info)
             // .configure(config)
             .wrap(cors)
             .wrap(Logger::default())
