@@ -1,11 +1,12 @@
 mod routes;
-// mod models;
+mod models;
 
 use actix_cors::Cors;
 use actix_web::{http::header, HttpServer, middleware::Logger, App};
 use sqlx::{Pool, Postgres, postgres::PgPoolOptions};
 use dotenv::dotenv;
-use routes::{airplane::get_plane_info};
+use routes::airplane::get_plane_info;
+use crate::routes::config::config;
 
 pub struct AppState{
     db: Pool<Postgres>,
@@ -50,7 +51,7 @@ async fn main() -> std::io::Result<()>{
         App::new()
             .app_data(actix_web::web::Data::new(AppState{db:pool.clone()}))
             .service(get_plane_info)
-            // .configure(config)
+            .configure(config)
             .wrap(cors)
             .wrap(Logger::default())
     })

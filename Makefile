@@ -42,3 +42,12 @@ init_docker: stop_containers start_docker_container
 
 start:
 	init_docker run
+
+make_migrations:
+	sqlx migrate add -r init
+
+migrate_up:
+	sqlx migrate run
+
+migrate_down:
+	sqlx migrate revert

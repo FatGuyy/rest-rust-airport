@@ -1,5 +1,6 @@
-use crate::models::{Flight, CreateFlightSchema, UpdateFlightSchema};
 use crate::AppState;
+use crate::models::airport::{Flight, CreateFlightSchema, UpdateflightSchema};
+
 use sqlx;
 use sqlx::types::Uuid;
 use actix_web::{get, post, put, web, HttpResponse, Responder, delete};
@@ -57,8 +58,9 @@ pub async fn get_flight_by_id(path: web::Path<Uuid>, data: web::Data<AppState>) 
 #[post("/flights")]
 pub async fn create_flight(body: web::Json<CreateFlightSchema>, data: web::Data<AppState>) -> impl Responder {
     let query_result = sqlx::query!(
-        "INSERT INTO flights (flight_name, Starting_location, Landing_location) VALUES ($1, $2, $3) RETURNING *",
+        "INSERT INTO flights (flight_name, plane_name, Starting_location, Landing_location) VALUES ($1, $2, $3, $4) RETURNING *",
         body.flight_name.clone(),
+        body.plane_name.clone(),
         body.Starting_location.clone(),
         body.Landing_location.clone(),
     )
@@ -90,8 +92,9 @@ pub async fn update_flight(
 ) -> impl Responder {
     let flight_id = path.into_inner();
     let query_result = sqlx::query!(
-        "UPDATE flights SET flight_name = $1, Starting_location = $2, Landing_location = $3 WHERE id = $4 RETURNING *",
+        "UPDATE flights SET flight_name = $1, plane_name = $2, Starting_location = $3, Landing_location = $4 WHERE id = $5 RETURNING *",
         body.flight_name.clone(),
+        body.plane_name.clone(),
         body.Starting_location.clone(),
         body.Landing_location.clone(),
         flight_id,
