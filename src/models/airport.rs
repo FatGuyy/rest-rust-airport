@@ -16,10 +16,8 @@ pub struct Flight{
     pub id:Uuid,
     pub plane_name: String,
     pub flight_name: String,
-    #[serde(rename = "Starting_location")]
-    pub Starting_location: Option<chrono::DateTime<chrono::Utc>>,
-    #[serde(rename = "Landing_location")]
-    pub Landing_location: Option<chrono::DateTime<chrono::Utc>>,
+    pub Starting_location: String,
+    pub Landing_location: String,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -35,7 +33,7 @@ pub struct CreateFlightSchema {
 #[allow(non_snake_case)]
 pub struct UpdateflightSchema {
     pub flight_name: Option<String>,
-    pub plane_name: String,
+    pub plane_name: Option<String>,
     pub Starting_location: Option<String>,
     pub Landing_location: Option<String>,
 }

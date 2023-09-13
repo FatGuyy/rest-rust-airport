@@ -87,7 +87,7 @@ pub async fn create_flight(body: web::Json<CreateFlightSchema>, data: web::Data<
 #[put("/flights/{id}")]
 pub async fn update_flight(
     path: web::Path<Uuid>,
-    body: web::Json<UpdateFlightSchema>,
+    body: web::Json<UpdateflightSchema>,
     data: web::Data<AppState>,
 ) -> impl Responder {
     let flight_id = path.into_inner();
