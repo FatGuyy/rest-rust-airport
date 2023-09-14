@@ -1,4 +1,4 @@
-DB_DOCKER_CONTAINER = actix_web_postgres_container
+DB_DOCKER_CONTAINER = airport_db_postgres_container
 
 install:
 	cargo install cargo-edit
@@ -38,7 +38,7 @@ start_docker_container:
 run:
 	cargo run
 
-init_docker: stop_containers start_docker_container
+run_docker: stop_containers start_docker_container
 
 start:
 	init_docker run

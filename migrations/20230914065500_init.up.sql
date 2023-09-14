@@ -3,9 +3,9 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE IF NOT EXISTS flights (
     "id" uuid PRIMARY KEY NOT NULL DEFAULT (uuid_generate_v4()),
-    "plane_name" varchar NOT NULL,
     "flight_name" varchar NOT NULL,
-    "day" varchar NOT NULL,
-    "Starting_location" TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    "Landing_location" TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+    "take_off_location" varchar NOT NULL,
+    "landing_location" varchar NOT NULL,
+    "created_at" TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    "updated_at" TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );

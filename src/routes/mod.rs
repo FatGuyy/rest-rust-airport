@@ -1,3 +1,3 @@
 pub mod airplane;
-pub mod airport;
+pub mod flight;
 pub mod config;
